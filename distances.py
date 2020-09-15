@@ -31,7 +31,7 @@ with open('distances.csv') as csvfile:
         return float(distance)
     # this is the time that the first truck leaves the hub
     first_time_list = ['8:00:00']
-    second_time_list = ['9:10:00']
+    second_time_list = ['9:05:00']
     third_time_list = ['11:00:00']
 
     # this function takes a distance then divides it by 18. It then uses divmod to display a time and appends 00
@@ -50,6 +50,7 @@ with open('distances.csv') as csvfile:
             d = datetime.timedelta(hours=int(h), minutes=int(m), seconds=int(s))
             sum += d
         return sum
+
     # Repeated function for second truck
     def time_status_truck_two(distance):
         mph = 18
@@ -63,9 +64,11 @@ with open('distances.csv') as csvfile:
             d = datetime.timedelta(hours=int(h), minutes=int(m), seconds=int(s))
             sum += d
         return sum
+
     # Repeated function for the third truck
     def time_status_truck_three(distance):
-        new_time = distance / 18
+        mph = 18
+        new_time = distance / mph
         distance_in_minutes = '{0:02.0f}:{1:02.0f}'.format(*divmod(new_time * 60, 60))
         final_time = distance_in_minutes + ':00'
         third_time_list.append(final_time)
@@ -114,7 +117,7 @@ with open('distances.csv') as csvfile:
             return truck_distance_list
         else:  #
             try:
-                lowest_value = 50.0
+                lowest_value = 25.0
                 new_location = 0
                 for index in truck_distance_list:
                     if check_current_distance(current_location, int(index[1])) <= lowest_value:

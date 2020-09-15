@@ -31,26 +31,22 @@ with open('inputs.csv') as csvfile:
         # The data structure here focuses on moving all attributes of a package into a nested listed.
         # This allows for quick lookup and sorting that can be based on every package detail
         # Below is the set of constraints that determine which packages are loaded in either of the two trucks
-        if deliver != 'EOD':
-            if 'Must' in notes or 'None' in notes:
-                truck_one.append(value) # this is a list that represents the first truck
-        if 'Can only be' in notes:
+        if '9:00 AM' in value[6] or '10:30 AM' in value[6]:
+            truck_one.append(value)
+        if 'Delayed' in value[8]:
             truck_two.append(value)
-        if 'Delayed' in notes:
-            truck_two.append(value)
-        # change the wrong address package to the correct address
-        if '84104' in zipcode and '10:30' not in deliver:
-            truck_one_trip_two.append(value)
-        if package_id == 9:
-            address = '410 S State St'
-            zipcode = '84111'
+        if '5383 South' in value[2]:
+            truck_one.append(value)
+        if 'Wrong address listed' in value[8]:
+            value[2] = '410 S State St'
+            value[5] = '84111'
             truck_one_trip_two.append(value)
         if value not in truck_one and value not in truck_two and value not in truck_one_trip_two:
             if len(truck_two) > len(truck_one_trip_two):
                 truck_one_trip_two.append(value)
             else:
                 truck_two.append(value)
-        hash_table_insert.insert(key, value) # adds all values in csv file to to a hash table
+        hash_table_insert.insert(key, value)  # adds all values in csv file to a hash table
 
     # function used to get the full list of values at start of day
     # Space-time complexity is O(1)

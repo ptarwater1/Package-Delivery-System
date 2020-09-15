@@ -6,7 +6,7 @@ import datetime
 class Main:
     # This is the display message that is shown when the user runs the program. The interface is accessible from here
     print('WGUPS Package Tracking System')
-    print('Current delivery route was completed after', "{0:.2f}".format(packages.total_distance(), 2), 'miles.')
+    print('Current delivery route was completed after', "{0:.2f}".format(packages.final_mileage(), 2), 'miles.')
     start = input("To begin, please type 'search' to search for an individual package or "
                   "type 'time' to view the status of all packages at a specified time: ")
     # Space-time complexity is O(N)

@@ -4,14 +4,21 @@ from buildhashtable import HashMap
 with open('inputs.csv') as csvfile:
     readCSV = csv.reader(csvfile, delimiter=',')
 
-    hash_table_insert = HashMap()  # Calls the Hashmap class to create an object of Hashmap
-    truck_one = []  # list of truck one
-    truck_two = [] # list that represents the second truck delivery
-    truck_one_trip_two = [] # list that represents the final truck delivery
+    """
+    First calls the class HashMap to create object of HashMap
+    Followed by lists of truck one, truck two and the second trip of truck one
+    """
 
-    # Read in values from CSV file and insert them into key / value pairs
-    # these values are what makes up the nested dictionary inside of the Hash table
-    # Space-time complexity is O(N)
+    hash_table_insert = HashMap()
+    truck_one = []
+    truck_two = []
+    truck_one_trip_two = []
+
+    """
+    CSV data is placed into key and value pairs that make up the nested dictionary inside the hash table
+    O(N) Space-Time Complexity
+    """
+
     for row in readCSV:
         package_id = row[0]
         address = row[1]
@@ -23,14 +30,18 @@ with open('inputs.csv') as csvfile:
         notes = row[7]
         start = ''
         location_address = ''
-        status = 'At Hub'
+        status = 'At the Hub'
         iterate = [package_id, location_address, address, city, state, zipcode, deliver, weight, notes, start, status]
         key = package_id
         value = iterate
-        # In place constraints to create a list of packages that are loaded onto the trucks
-        # The data structure here focuses on moving all attributes of a package into a nested listed.
-        # This allows for quick lookup and sorting that can be based on every package detail
-        # Below is the set of constraints that determine which packages are loaded in either of the two trucks
+
+        """
+        Creates the lists for each truck. Observes assumptions given by WGU as to what trucks can leave at what time
+        as well as the packages that have deadlines. Other assumptions such as packages that must be linked and have
+        addresses that must corrected are also considered. A nested list is created for each truck and values are added
+        from the CSV into a hash table.        
+        """
+
         if '9:00 AM' in value[6] or '10:30 AM' in value[6]:
             truck_one.append(value)
         if 'Delayed' in value[8]:
@@ -46,25 +57,37 @@ with open('inputs.csv') as csvfile:
                 truck_one_trip_two.append(value)
             else:
                 truck_two.append(value)
-        hash_table_insert.insert(key, value)  # adds all values in csv file to a hash table
+        hash_table_insert.insert(key, value)
 
-    # function used to get the full list of values at start of day
-    # Space-time complexity is O(1)
+    """
+    Calls the hash map to obtain lists of each truck.
+    O(1) Space-Time Complexity
+    """
+
     def get_hash_map():
         return hash_table_insert
 
-    # function used to grab the packages that are loaded into the first truck
-    # Space-time complexity is O(1)
+    """
+    Obtains list of truck one.
+    O(1) Space-Time Complexity
+    """
+
     def check_truck_one_trip_one():
         return truck_one
 
-    # function used to grab the packages that are loaded into the second truck
-    # Space-time complexity is O(1)
+    """
+    Obtains list of truck two.
+    O(1) Space-Time Complexity
+    """
+
     def check_truck_two_trip_one():
         return truck_two
 
-    # function used to grab the packages that are loaded into the first truck last
-    # Space-time complexity is O(1)
+    """
+    Obtains list of truck one's second trip.
+    O(1) Space-Time Complexity
+    """
+
     def check_truck_one_trip_two():
         return truck_one_trip_two
 

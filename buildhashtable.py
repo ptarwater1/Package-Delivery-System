@@ -7,22 +7,30 @@ class HashTableEntries:
 
 class HashMap:
 
-    # Constructor
-    # Space-time complexity is O(1)
+    """
+    Create constructor
+    O(1) Space-Time Complexity
+    """
+
     def __init__(self, initial_capacity=10):
         # initialize the hash table with empty bucket list entries.
         self.map = []
         for i in range(initial_capacity):
             self.map.append([])
 
-    # private getter to create a hash key
-    # Space-time complexity is O(1)
+    """
+    Hash Key Creation
+    O(1) Space-Time Complexity 
+    """
+
     def _get_hash(self, key):
         bucket = int(key) % len(self.map)
         return bucket
 
-    # Insert a new package value into the hash table
-    # Space-time complexity is O(N)
+    """
+    O(N) Space-Time Complexity 
+    """
+
     def insert(self, key, value):
         key_hash = self._get_hash(key)
         key_value = [key, value]
@@ -38,7 +46,10 @@ class HashMap:
             self.map[key_hash].append(key_value)
             return True
 
-    # Space-time complexity is O(N)
+    """
+    O(N) Space-Time Complexity
+    """
+
     def update(self, key, value):
         key_hash = self._get_hash(key)
         if self.map[key_hash] is not None:
@@ -50,8 +61,11 @@ class HashMap:
         else:
             print('Key error update with: ' + key)
 
-    # Grab a value from the hash table
-    # Space-time complexity is O(N)
+    """
+    Retrieves hash table value
+    O(N) Space-Time Complexity 
+    """
+
     def get(self, key):
         key_hash = self._get_hash(key)
         if self.map[key_hash] is not None:
@@ -59,8 +73,10 @@ class HashMap:
                 if pair[0] == key:
                     return pair[1]
         return None
-    # Remove a value from the hash table
-    # runtime is O(N)
+    """
+    Deletes hash table value
+    O(N) Run time
+    """
 
     def remove(self, key):
         key_hash = self._get_hash(key)

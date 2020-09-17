@@ -1,3 +1,7 @@
+"""
+Patrick Tarwater #000919107
+"""
+
 import csv
 import datetime
 
@@ -121,17 +125,17 @@ with open('distances.csv') as csvfile:
 
     """
     A greedy algorithm is used to optimize the route for each truck. Three parameters are used; the list for each truck, 
-    the number of the truck, the current location. (Section A)
+    the number of the truck, the current location. 
     
     A base case of the algorithm is established in the first 'if' statement and end the recursion function once the
-    input list reaches size 0. (Section B)
+    input list reaches size 0. 
         
-    The algorithm begins by using a "lowest value" of 25.0 which is used to compare every possible distance between 
+    The algorithm begins by using a "smallest value" of 25.0 which is used to compare every possible distance between 
     points that are available and checks if it is a smaller value. If a distance is less than the lowest value then it 
-    is updated and the search goes on. (Section C)
+    is updated and the search goes on. 
     
     Once all distances and route possibilities are examined, the truck is ready for departure with the package list    
-    provided and then adds that package objects and linked index to new lists. (Section D)
+    provided and then adds that package objects and linked index to new lists. 
     
     The second parameter is checked and makes sure the correct packages are linked and put in the new lists.
     
@@ -149,40 +153,40 @@ with open('distances.csv') as csvfile:
     is necessary to find the shortest path.   
     """
 
-    def find_shortest_path(truck_distance_list, truck_number, current_location):  # Section A
-        if len(truck_distance_list) == 0:  # Section B
-            return truck_distance_list
+    def find_shortest_path(truck_package_list, truck_id, active_location):  # Section A
+        if len(truck_package_list) == 0:  # Section B
+            return truck_package_list
         else:  #
             try:
                 smallest_value = 25.0
-                new_location = 0
-                for index in truck_distance_list:
-                    if check_current_distance(current_location, int(index[1])) <= smallest_value:
-                        smallest_value = check_current_distance(current_location, int(index[1]))  # Section C
-                        new_location = int(index[1])
-                for index in truck_distance_list:  # Section D
-                    if check_current_distance(current_location, int(index[1])) == smallest_value:
-                        if truck_number == 1:
+                next_location = 0
+                for index in truck_package_list:
+                    if check_current_distance(active_location, int(index[1])) <= smallest_value:
+                        smallest_value = check_current_distance(active_location, int(index[1]))  # Section C
+                        next_location = int(index[1])
+                for index in truck_package_list:  # Section D
+                    if check_current_distance(active_location, int(index[1])) == smallest_value:
+                        if truck_id == 1:
                             efficient_truck_one.append(index)
                             index_list_truck_one.append(index[1])
-                            pop_value = truck_distance_list.index(index)
-                            truck_distance_list.pop(pop_value)
-                            current_location = new_location
-                            find_shortest_path(truck_distance_list, 1, current_location)
-                        elif truck_number == 2:
+                            pop_value = truck_package_list.index(index)
+                            truck_package_list.pop(pop_value)
+                            active_location = next_location
+                            find_shortest_path(truck_package_list, 1, active_location)
+                        elif truck_id == 2:
                             efficient_truck_two.append(index)
                             index_list_truck_two.append(index[1])
-                            pop_value = truck_distance_list.index(index)
-                            truck_distance_list.pop(pop_value)
-                            current_location = new_location
-                            find_shortest_path(truck_distance_list, 2, current_location)
-                        elif truck_number == 3:
+                            pop_value = truck_package_list.index(index)
+                            truck_package_list.pop(pop_value)
+                            active_location = next_location
+                            find_shortest_path(truck_package_list, 2, active_location)
+                        elif truck_id == 3:
                             efficient_truck_three.append(index)
                             index_list_truck_three.append(index[1])
-                            pop_value = truck_distance_list.index(index)
-                            truck_distance_list.pop(pop_value)
-                            current_location = new_location
-                            find_shortest_path(truck_distance_list, 3, current_location)
+                            pop_value = truck_package_list.index(index)
+                            truck_package_list.pop(pop_value)
+                            active_location = next_location
+                            find_shortest_path(truck_package_list, 3, active_location)
             except IndexError:
                 pass
 

@@ -1,3 +1,8 @@
+"""
+Patrick Tarwater #000919107
+"""
+
+
 class HashTableEntries:
 
     def __init__(self, key, item):
